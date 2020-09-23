@@ -36,7 +36,7 @@ which is by convention expected to be in `src/main/jenkins`.
 
 Once your tests are successful, begin to clean up the mess you made by refactoring your code.
 
-Finally, start over as you expand your Jenkins pipeline :grinning:
+Finally, start over as you expand your Jenkins pipeline :construction_worker:.
 
 ## Contributing
 
