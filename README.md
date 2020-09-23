@@ -1,5 +1,7 @@
 Test-driven CI/CD Jenkins pipelines
 ==================
+![maven build](https://github.com/lpradel/test-driven-jenkins-pipeline/workflows/maven-build/badge.svg)
+
 This is a Maven-based project demonstrating how to unit-test declarative Jenkins pipelines with the
 help of the [Jenkins Pipeline Unit](https://github.com/jenkinsci/JenkinsPipelineUnit) framework.
 
