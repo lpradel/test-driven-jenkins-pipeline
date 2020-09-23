@@ -1,6 +1,7 @@
 Test-driven CI/CD Jenkins pipelines
 ==================
-Test-driven development of Jenkins pipelines with Jenkins Pipeline Unit
+This is a Maven-based project demonstrating how to unit-test declarative Jenkins pipelines with the
+help of the [Jenkins Pipeline Unit](https://github.com/jenkinsci/JenkinsPipelineUnit) framework.
 
 ## Installation
 
