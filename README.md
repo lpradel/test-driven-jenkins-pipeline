@@ -22,7 +22,7 @@ mvn clean verify
 This project has the following dependencies:
 - Java 11
 - JUnit 5
-- Groovy 3.0.5
+- Groovy 3
 - [Jenkins Pipeline Unit](https://github.com/jenkinsci/JenkinsPipelineUnit) 1.9
 
 ## Usage
