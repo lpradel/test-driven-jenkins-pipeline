@@ -2,6 +2,7 @@ package de.conciso
 
 import com.lesfurets.jenkins.unit.declarative.DeclarativePipelineTest
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 import static org.junit.jupiter.api.Assertions.assertThrows
@@ -11,28 +12,72 @@ class PipelineTest extends DeclarativePipelineTest {
     @BeforeEach
     void setUp() throws Exception {
         super.setUp()
-        helper.addShMock('mvn clean install', '', 0)
     }
 
-    @Test
-    void should_execute_without_errors() throws Exception {
-        runScript("Jenkinsfile") // when
-        assertJobStatusSuccess() // then
-        printCallStack()
+    @Nested
+    class GivenMavenFails {
+
+        @BeforeEach
+        void setUp() throws Exception {
+            helper.addShMock('mvn clean install', '', 1)
+        }
+
+        @Nested
+        class WhenRunPipeline {
+
+            @Test
+            void thenPipelineShouldFail() throws Exception {
+                assertThrows(java.lang.reflect.UndeclaredThrowableException) {
+                    runScript('Jenkinsfile')
+                }
+            }
+        }
     }
 
-    @Test
-    void should_read_file_and_fail() throws Exception {
-        helper.addReadFileMock('output', 'FAILED!!!') // given
-        runScript("Jenkinsfile") // when
-        assertJobStatusFailure() // then
-    }
+    @Nested
+    class GivenMavenSucceeds {
 
-    @Test
-    void should_fail_if_mvn_fail() throws Exception {
-        helper.addShMock('mvn clean install', '', 1) // given
-        assertThrows(java.lang.reflect.UndeclaredThrowableException) { // then
-            runScript('Jenkinsfile') // when
+        @BeforeEach
+        void setUp() throws Exception {
+            helper.addShMock('mvn clean install', '', 0)
+        }
+
+        @Nested
+        class WhenRunPipeline {
+
+            @BeforeEach
+            void setUp() throws Exception {
+                runScript("Jenkinsfile")
+            }
+
+            @Test
+            void thenPipelineShouldExecuteWithoutErrors() throws Exception {
+                assertJobStatusSuccess()
+                printCallStack()
+            }
+        }
+
+        @Nested
+        class AndReadFileContainsFailed {
+
+            @BeforeEach
+            void setUp() throws Exception {
+                helper.addReadFileMock('output', 'FAILED!!!') // given
+            }
+
+            @Nested
+            class WhenRunPipeline {
+
+                @BeforeEach
+                void setUp() throws Exception {
+                    runScript("Jenkinsfile")
+                }
+
+                @Test
+                void thenPipelineShouldExecuteWithoutErrors() throws Exception {
+                    assertJobStatusFailure()
+                }
+            }
         }
     }
 }
