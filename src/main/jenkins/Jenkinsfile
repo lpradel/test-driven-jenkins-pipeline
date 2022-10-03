@@ -3,9 +3,14 @@ pipeline {
     agent none
     stages {
         stage('Maven Build') {
-            agent { docker 'maven:3-alpine' }
             steps {
-                sh('mvn clean install')
+                script {
+                    def statusCode = sh(script: 'mvn clean install', returnStatus: true)
+                    if (statusCode > 0) {
+                        currentBuild.result = 'FAILURE'
+                        error 'Maven failed'
+                    }
+                }
             }
         }
         stage('Read File') {

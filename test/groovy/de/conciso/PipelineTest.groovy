@@ -5,10 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-import java.lang.reflect.UndeclaredThrowableException
-
-import static org.junit.jupiter.api.Assertions.assertThrows
-
 class PipelineTest extends DeclarativePipelineTest {
     @BeforeEach
     void setUp() {
@@ -24,11 +20,14 @@ class PipelineTest extends DeclarativePipelineTest {
 
         @Nested
         class WhenRunPipeline {
+            @BeforeEach
+            void setUp() {
+                runScript("Jenkinsfile")
+            }
+
             @Test
             void thenPipelineShouldFail() {
-                assertThrows(UndeclaredThrowableException) {
-                    runScript('Jenkinsfile')
-                }
+                assertJobStatusFailure()
             }
         }
     }
