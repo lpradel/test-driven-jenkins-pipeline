@@ -1,4 +1,4 @@
-package de.conciso
+package com.lukaspradel
 
 import com.lesfurets.jenkins.unit.declarative.DeclarativePipelineTest
 import org.junit.jupiter.api.BeforeEach
